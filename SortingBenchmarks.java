@@ -14,37 +14,49 @@ copy[i] = integer[i];
 }
 
 //passing copy array into bubbleSort method
-int count = 0;
-count = bubbleSort(copy);
+int bubbleExchanges = bubbleSort(integer);
 
-int exchangeCount = 0;
-exchangeCount = selectionSort(copy);
+int selectionExchanges = selectionSort(copy);
 
 System.out.println("Bubble Sort Results");
-System.out.println("Sorted Array: ");
-System.out.println("Number of Exchanges: " + count);
-
+System.out.print("Sorted Array: ");
+for (int i = 0; i < integer.length; i++)
+  System.out.print(integer[i] + " ");
+System.out.println();
+System.out.println("Number of Exchanges: " + bubbleExchanges);
 System.out.println();
 
 System.out.println("Selection Sort Results");
-System.out.println("Sorted Array: ");
-System.out.println("Number of Exchanges: " + exchangeCount);
+System.out.print("Sorted Array: ");
+for (int i = 0; i < copy.length; i++)
+  System.out.print(copy[i] + " ");
+System.out.println();
+System.out.println("Number of Exchanges: " + selectionExchanges);
+System.out.println();
+
+
+if (bubbleExchanges < selectionExchanges){
+  System.out.println("Bubble sort made fewer exchanges.");
+} else if (bubbleExchanges > selectionExchanges){
+  System.out.println("Selection sort made fewer exchanges.");
+} else {
+  System.out.println("Both Algorithms performed the exact same number of exchanges.");
+}
 }//end of main method
 
-
 //Return methods for BubbleSort and SelectionSort
-public static int bubbleSort(int [] copy){
+public static int bubbleSort(int [] integer){
 int count = 0;
 
-for (int i = 0; i < copy.length; i++){
-    for (int j = 0; j < copy.length - 1; j++){
+for (int i = 0; i < integer.length - 1; i++){
+    for (int j = 0; j < integer.length - 1; j++){
     
-    if (copy[j] < copy[j+1]){
-         int temp = copy[j];
-         copy[j] = copy[j+1];
-         copy[j+1] = temp;
-    
-    count++;
+    if (integer[j] > integer[j+1]){
+         int temp = integer[j];
+         integer[j] = integer[j+1];
+         integer[j+1] = temp;
+         
+         count++;
     }   
   }
 }
@@ -54,16 +66,22 @@ return count;
 public static int selectionSort(int [] copy){
 int exchangeCount = 0;
 
-for (int i = 0; i < copy.length; i++){
-    for (int j = 0; j < copy.length - 1; j++){
+
+for (int i = 0; i < copy.length - 1; i++){
+  int min = i;
+    for (int j = i + 1; j < copy.length; j++){
     
-    if (copy [j] > copy[j+1]){
-        int temp = copy[j];
-        copy [j+1] = copy [j];
-        copy [j+1] = temp;
+    if (copy[j] < copy[min]){
+       min = j;
     }
- }
-  exchangeCount++;
+    if (min != i){
+    int temp = copy[i];
+    copy[i] = copy[min];
+    copy[min] = temp;
+    
+    exchangeCount++;    
+    }
+  }
 }
 return exchangeCount;
 }//end of SelectionSort return method
